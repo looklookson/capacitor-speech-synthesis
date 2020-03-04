@@ -9,6 +9,7 @@ import com.getcapacitor.PluginMethod;
 import java.util.Locale;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.os.Bundle;
 @NativePlugin()
 public class SpeechSynthesisPlugin extends Plugin {
 
@@ -28,6 +29,7 @@ public class SpeechSynthesisPlugin extends Plugin {
     public void speak(PluginCall call) {
       final String value = call.getString("value");
       final String language = call.getString("language", "en");
+      final String volume = call.getString("volume","1.0");
       final Locale locale = Locale.forLanguageTag(language);
   
       if (locale == null) {
@@ -37,9 +39,22 @@ public class SpeechSynthesisPlugin extends Plugin {
   
       tts = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
         @Override
-        public void onInit(int i) {
-          tts.setLanguage(locale);
-          tts.speak(value, TextToSpeech.QUEUE_FLUSH, null, "capacitoraccessibility" + System.currentTimeMillis());
+        public void onInit(int status) {
+            if (status == TextToSpeech.SUCCESS) {
+                int result =tts.setLanguage(locale);
+
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e(getLogTag(), "Language "+locale+" is not supported!");
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putFloat(TextToSpeech.KEY_PARAM_VOLUME,Float.parseFloat(volume));
+
+                tts.speak(value, TextToSpeech.QUEUE_FLUSH, bundle, "capacitorspeech" + System.currentTimeMillis());
+            }
+            else {
+                Log.e(getLogTag(), "TextToSpeech Initialization failed!");
+            }
         }
       });
 

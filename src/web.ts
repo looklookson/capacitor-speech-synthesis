@@ -23,6 +23,10 @@ export class SpeechSynthesisPluginWeb extends WebPlugin implements SpeechSynthes
     if (options.language) {
       utterance.lang = options.language;
     }
+    if (options.volume) {
+      utterance.volume = options.volume;
+    }
+
     window.speechSynthesis.speak(utterance);
     return Promise.resolve();
   }

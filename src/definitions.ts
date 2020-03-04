@@ -22,4 +22,8 @@ export interface SpeakOptions {
    * Currently only supported on Android.
    */
   language?: string;
+  /**
+   * The volume of speak
+   */
+  volume?: number;
 }
