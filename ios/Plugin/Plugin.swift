@@ -1,5 +1,6 @@
 import Foundation
 import Capacitor
+import SafariServices
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -8,10 +9,22 @@ import Capacitor
 @objc(SpeechSynthesisPlugin)
 public class SpeechSynthesisPlugin: CAPPlugin {
     
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.success([
-            "value": value
-        ])
+    // @objc func echo(_ call: CAPPluginCall) {
+    //     let value = call.getString("value") ?? ""
+    //     call.success([
+    //         "value": value
+    //     ])
+    // }
+
+    @objc func speak(_ call: CAPPluginCall) {
+        guard let value = call.getString("value") else {
+            call.error("No value provided")
+            return
+        }
+
+        UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: value)
+
+        call.success()
     }
+
 }
