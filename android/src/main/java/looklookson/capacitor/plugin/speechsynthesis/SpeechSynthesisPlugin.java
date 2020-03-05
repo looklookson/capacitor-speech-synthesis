@@ -48,7 +48,7 @@ public class SpeechSynthesisPlugin extends Plugin {
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putFloat(TextToSpeech.KEY_PARAM_VOLUME,Float.parseFloat(volume));
+                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME,Float.parseFloat(volume));
 
                 tts.speak(value, TextToSpeech.QUEUE_FLUSH, bundle, "capacitorspeech" + System.currentTimeMillis());
             }
