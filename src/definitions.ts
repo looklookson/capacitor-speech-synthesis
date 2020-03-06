@@ -1,10 +1,10 @@
 declare module "@capacitor/core" {
   interface PluginRegistry {
-    SpeechSynthesisPlugin: SpeechSynthesisPluginPlugin;
+    SpeechSynthesis: SpeechSynthesisPlugin;
   }
 }
 
-export interface SpeechSynthesisPluginPlugin {
+export interface SpeechSynthesisPlugin {
   
   // echo(options: { value: string }): Promise<{value: string}>;
 

@@ -1,10 +1,10 @@
 import { WebPlugin } from '@capacitor/core';
-import { SpeechSynthesisPluginPlugin, SpeakOptions } from './definitions';
-
-export class SpeechSynthesisPluginWeb extends WebPlugin implements SpeechSynthesisPluginPlugin {
+import { SpeechSynthesisPlugin, SpeakOptions } from './definitions';
+import { registerWebPlugin } from '@capacitor/core';
+export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlugin {
   constructor() {
     super({
-      name: 'SpeechSynthesisPlugin',
+      name: 'SpeechSynthesis',
       platforms: ['web']
     });
   }
@@ -31,12 +31,12 @@ export class SpeechSynthesisPluginWeb extends WebPlugin implements SpeechSynthes
     return Promise.resolve();
   }
 
-
 }
 
-const SpeechSynthesisPlugin = new SpeechSynthesisPluginWeb();
+const SpeechSynthesis = new SpeechSynthesisWeb();
+registerWebPlugin(SpeechSynthesis);
 
-export { SpeechSynthesisPlugin };
+export { SpeechSynthesis };
 
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(SpeechSynthesisPlugin);
+
+

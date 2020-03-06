@@ -10,8 +10,9 @@ import java.util.Locale;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.os.Bundle;
+
 @NativePlugin()
-public class SpeechSynthesisPlugin extends Plugin {
+public class SpeechSynthesis extends Plugin {
 
     private TextToSpeech tts;
 
@@ -29,7 +30,7 @@ public class SpeechSynthesisPlugin extends Plugin {
     public void speak(PluginCall call) {
       final String value = call.getString("value");
       final String language = call.getString("language", "en");
-      final String volume = call.getString("volume","1.0");
+      final Float volume = call.getFloat("volume",1.0f);
       final Locale locale = Locale.forLanguageTag(language);
   
       if (locale == null) {
@@ -48,20 +49,25 @@ public class SpeechSynthesisPlugin extends Plugin {
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME,Float.parseFloat(volume));
+                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.floatValue());
 
                 tts.speak(value, TextToSpeech.QUEUE_FLUSH, bundle, "capacitorspeech" + System.currentTimeMillis());
             }
             else {
                 Log.e(getLogTag(), "TextToSpeech Initialization failed!");
             }
+
+
+            // tts.setLanguage(locale);
+            // tts.speak(value, TextToSpeech.QUEUE_FLUSH, null, "capacitorspeech" + System.currentTimeMillis());
+
         }
       });
 
       call.success();
 
-    //   // Not yet implemented
-    //   throw new UnsupportedOperationException();
+      // Not yet implemented
+      // throw new UnsupportedOperationException();
     }
 
 
