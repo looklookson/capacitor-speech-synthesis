@@ -1,6 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
-import { SpeechSynthesisPlugin, SpeakOptions } from './definitions';
+import { SpeechSynthesisPlugin, SpeakOptions, SupportMatrix } from './definitions';
 import { registerWebPlugin } from '@capacitor/core';
+
+const supportSpeechSynthesis = ('speechSynthesis' in window);
 export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlugin {
   constructor() {
     super({
@@ -13,6 +15,12 @@ export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlug
   //   console.log('ECHO', options);
   //   return options;
   // }
+
+  async getSupportMatrix(): Promise<SupportMatrix> {
+    return {
+      hasVolumeControl: supportSpeechSynthesis
+    };
+  }
 
   async speak(options: SpeakOptions): Promise<void> {
     if (!('speechSynthesis' in window)) {

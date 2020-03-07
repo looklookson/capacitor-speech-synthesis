@@ -8,6 +8,7 @@ export interface SpeechSynthesisPlugin {
   
   // echo(options: { value: string }): Promise<{value: string}>;
 
+  getSupportMatrix(): Promise<SupportMatrix>;
   speak(options: SpeakOptions): Promise<void>;
 
 }
@@ -26,4 +27,11 @@ export interface SpeakOptions {
    * The volume of speak
    */
   volume?: number;
+}
+
+export interface SupportMatrix {
+  /**
+   * Does the system support change of volume
+   */
+  hasVolumeControl: boolean;
 }

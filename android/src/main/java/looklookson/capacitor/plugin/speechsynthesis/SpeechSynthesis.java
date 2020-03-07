@@ -7,6 +7,9 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
 import java.util.Locale;
+
+import android.content.Context;
+import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.os.Bundle;
@@ -25,9 +28,17 @@ public class SpeechSynthesis extends Plugin {
     //     call.success(ret);
     // }
 
+    @PluginMethod()
+    public void getSupportMatrix(PluginCall call) {
+        JSObject ret = new JSObject();
+        ret.put("hasVolumeControl",true);
+        call.success(ret);
+    }
+
 
     @PluginMethod()
     public void speak(PluginCall call) {
+
       final String value = call.getString("value");
       final String language = call.getString("language", "en");
       final Float volume = call.getFloat("volume",1.0f);
@@ -48,18 +59,23 @@ public class SpeechSynthesis extends Plugin {
                     Log.e(getLogTag(), "Language "+locale+" is not supported!");
                 }
 
-                Bundle bundle = new Bundle();
-                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.floatValue());
+                AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
 
-                tts.speak(value, TextToSpeech.QUEUE_FLUSH, bundle, "capacitorspeech" + System.currentTimeMillis());
+                int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                float percent = volume.floatValue();
+                int intVolume = (int) (maxVolume*percent);
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, intVolume, 0);
+
+
+//                Bundle bundle = new Bundle();
+//                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f);
+
+                tts.speak(value, TextToSpeech.QUEUE_FLUSH, null, "capacitorspeech" + System.currentTimeMillis());
             }
             else {
                 Log.e(getLogTag(), "TextToSpeech Initialization failed!");
             }
-
-
-            // tts.setLanguage(locale);
-            // tts.speak(value, TextToSpeech.QUEUE_FLUSH, null, "capacitorspeech" + System.currentTimeMillis());
 
         }
       });
