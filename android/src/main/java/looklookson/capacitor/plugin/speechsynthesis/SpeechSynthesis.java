@@ -41,7 +41,7 @@ public class SpeechSynthesis extends Plugin {
 
       final String value = call.getString("value");
       final String language = call.getString("language", "en");
-      final Float volume = call.getFloat("volume",1.0f);
+      final Float volume = call.getFloat("volume");
       final Locale locale = Locale.forLanguageTag(language);
   
       if (locale == null) {
@@ -59,14 +59,14 @@ public class SpeechSynthesis extends Plugin {
                     Log.e(getLogTag(), "Language "+locale+" is not supported!");
                 }
 
-                AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-
-                int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-                float percent = volume.floatValue();
-                int intVolume = (int) (maxVolume*percent);
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, intVolume, 0);
-
+                if(volume != null) {
+                    AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+                    int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                    float percent = volume.floatValue();
+                    int intVolume = (int) (maxVolume*percent);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, intVolume, 0);
+                }
 
 //                Bundle bundle = new Bundle();
 //                bundle.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f);

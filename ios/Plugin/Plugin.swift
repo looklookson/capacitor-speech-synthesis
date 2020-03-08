@@ -16,6 +16,12 @@ public class SpeechSynthesis: CAPPlugin {
     //     ])
     // }
 
+    @objc func getSupportMatrix(_ call: CAPPluginCall) {
+        call.success([
+            "hasVolumeControl": false
+        ])
+    }
+
     @objc func speak(_ call: CAPPluginCall) {
         guard let value = call.getString("value") else {
             call.error("No value provided")
