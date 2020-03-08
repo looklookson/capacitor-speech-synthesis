@@ -11,11 +11,6 @@ export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlug
     });
   }
 
-  // async echo(options: { value: string }): Promise<{value: string}> {
-  //   console.log('ECHO', options);
-  //   return options;
-  // }
-
   async getSupportMatrix(): Promise<SupportMatrix> {
     return {
       hasVolumeControl: ('speechSynthesis' in window)

@@ -5,8 +5,6 @@ declare module "@capacitor/core" {
 }
 
 export interface SpeechSynthesisPlugin {
-  
-  // echo(options: { value: string }): Promise<{value: string}>;
 
   getSupportMatrix(): Promise<SupportMatrix>;
   speak(options: SpeakOptions): Promise<void>;
