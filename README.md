@@ -33,6 +33,7 @@ Plugins.SpeechSynthesis.speak(
     {
     value: "Hello",
     volume: 0.75,
+    speechRate: 0.8,
     }
 );
 

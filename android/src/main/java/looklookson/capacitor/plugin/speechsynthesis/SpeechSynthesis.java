@@ -32,6 +32,7 @@ public class SpeechSynthesis extends Plugin {
     public void getSupportMatrix(PluginCall call) {
         JSObject ret = new JSObject();
         ret.put("hasVolumeControl",true);
+        ret.put("hasSpeechRateControl",true);
         call.success(ret);
     }
 
@@ -42,6 +43,7 @@ public class SpeechSynthesis extends Plugin {
       final String value = call.getString("value");
       final String language = call.getString("language", "en");
       final Float volume = call.getFloat("volume");
+      final Float speechRate = call.getFloat("speechRate");
       final Locale locale = Locale.forLanguageTag(language);
   
       if (locale == null) {
@@ -53,10 +55,20 @@ public class SpeechSynthesis extends Plugin {
         @Override
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS) {
-                int result =tts.setLanguage(locale);
 
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.e(getLogTag(), "Language "+locale+" is not supported!");
+                if(locale != null) {
+                    int result =tts.setLanguage(locale);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e(getLogTag(), "Language "+locale+" is not supported!");
+                    }
+                }
+
+                if (speechRate != null) {
+                    float rate = speechRate.floatValue();
+                    int result = tts.setSpeechRate(rate);
+                    if (result == TextToSpeech.ERROR) {
+                        Log.e(getLogTag(), "Fail to set speech rate.");
+                    }
                 }
 
                 if(volume != null) {

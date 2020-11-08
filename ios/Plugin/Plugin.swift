@@ -18,7 +18,8 @@ public class SpeechSynthesis: CAPPlugin {
 
     @objc func getSupportMatrix(_ call: CAPPluginCall) {
         call.success([
-            "hasVolumeControl": false
+            "hasVolumeControl": false,
+            "hasSpeechRateControl": false,
         ])
     }
 
@@ -28,7 +29,19 @@ public class SpeechSynthesis: CAPPlugin {
             return
         }
 
-        UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: value)
+        let lang = call.getString("language")
+        let volume = Float(call.getString("volume"))
+        let speechRate = Float(call.getString("speechRate"))
+
+        //UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: value)
+
+        let utterance = AVSpeechUtterance(string: value)
+        utterance.voice = AVSpeechSynthesisVoice(language: lang)
+        utterance.volume = volume
+        utterance.rate = speechRate
+
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
 
         call.success()
     }
