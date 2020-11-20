@@ -25,11 +25,16 @@ export interface SpeakOptions {
    * The volume of speak
    */
   volume?: number;
+  /**
+   * Speech rate. 1.0 is the normal speech rate, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it (2.0 is twice the normal speech rate).
+   */
+  speechRate?: number;
 }
 
 export interface SupportMatrix {
   /**
    * Does the system support change of volume
    */
-  hasVolumeControl: boolean;
+  hasVolumeControl?: boolean;
+  hasSpeechRateControl?: boolean;
 }

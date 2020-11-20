@@ -29,7 +29,9 @@ export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlug
     if (options.volume) {
       utterance.volume = options.volume;
     }
-
+    if (options.speechRate) {
+      utterance.rate = options.speechRate;
+    }
     window.speechSynthesis.speak(utterance);
     return Promise.resolve();
   }
