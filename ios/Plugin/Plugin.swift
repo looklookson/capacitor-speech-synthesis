@@ -32,7 +32,7 @@ public class SpeechSynthesis: CAPPlugin {
 
         let lang = call.getString("language")
         let volume = Float(call.getString("volume")!) ?? 0.5
-        let speechRate = Float(call.getString("speechRate")) ?? 0.5
+        let speechRate = Float(call.getString("speechRate")!) ?? 0.5
 
         //UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: value)
 
