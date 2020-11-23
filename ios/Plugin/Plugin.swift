@@ -30,7 +30,7 @@ public class SpeechSynthesis: CAPPlugin {
             return
         }
 
-        let lang = call.getString("language") ?? "en"
+        let lang = call.getString("language") ?? "en-US"
         let volume = call.getFloat("volume") ?? 0.5
         let speechRate = call.getFloat("speechRate") ?? 0.5
 
