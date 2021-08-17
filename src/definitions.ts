@@ -1,9 +1,3 @@
-declare module "@capacitor/core" {
-  interface PluginRegistry {
-    SpeechSynthesis: SpeechSynthesisPlugin;
-  }
-}
-
 export interface SpeechSynthesisPlugin {
 
   getSupportMatrix(): Promise<SupportMatrix>;
