@@ -10,15 +10,8 @@ import AVFoundation
 @objc(SpeechSynthesis)
 public class SpeechSynthesis: CAPPlugin {
     
-    // @objc func echo(_ call: CAPPluginCall) {
-    //     let value = call.getString("value") ?? ""
-    //     call.success([
-    //         "value": value
-    //     ])
-    // }
-
     @objc func getSupportMatrix(_ call: CAPPluginCall) {
-        call.success([
+        call.resolve([
             "hasVolumeControl": false,
             "hasSpeechRateControl": false,
         ])
@@ -26,7 +19,7 @@ public class SpeechSynthesis: CAPPlugin {
 
     @objc func speak(_ call: CAPPluginCall) {
         guard let value = call.getString("value") else {
-            call.error("No value provided")
+            call.reject("No value provided")
             return
         }
 
@@ -44,7 +37,7 @@ public class SpeechSynthesis: CAPPlugin {
         let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(utterance)
 
-        call.success()
+        call.resolve()
     }
 
 }

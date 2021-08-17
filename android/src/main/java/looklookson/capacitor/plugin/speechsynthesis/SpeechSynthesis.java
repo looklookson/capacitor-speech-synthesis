@@ -1,7 +1,7 @@
 package looklookson.capacitor.plugin.speechsynthesis;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
+import com.getcapacitor.CapacitorPlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -14,7 +14,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.os.Bundle;
 
-@NativePlugin()
+@CapacitorPlugin()
 public class SpeechSynthesis extends Plugin {
 
     private TextToSpeech tts;
