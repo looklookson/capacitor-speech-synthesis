@@ -1,6 +1,6 @@
 import { WebPlugin } from '@capacitor/core';
 import { SpeechSynthesisPlugin, SpeakOptions, SupportMatrix } from './definitions';
-import { registerPlugin } from '@capacitor/core';
+
 
 // const supportSpeechSynthesis = ('speechSynthesis' in window);
 export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlugin {
@@ -37,19 +37,4 @@ export class SpeechSynthesisWeb extends WebPlugin implements SpeechSynthesisPlug
   }
 
 }
-
-
-/*
-const SpeechSynthesis = new SpeechSynthesisWeb();
-registerWebPlugin(SpeechSynthesis);
-
-export { SpeechSynthesis };
-*/
-
-const MySpeechSynthesisPlugin = registerPlugin<SpeechSynthesisPlugin>('MySpeechSynthesisPlugin', {
-  web: () => import('./web').then(m => new m.SpeechSynthesisWeb()),
-});
-
-export * from './definitions';
-export { MySpeechSynthesisPlugin };
 
