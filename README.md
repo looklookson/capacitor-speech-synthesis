@@ -15,8 +15,6 @@ $ npm i --save capacitor-speech-synthesis
 ```ts
 import {SpeechSynthesis} from 'capacitor-speech-synthesis';
 
-SpeechSynthesis.load();
-
 SpeechSynthesis.speak(
     {
     value: "Hello",

@@ -1,7 +1,7 @@
 package looklookson.capacitor.plugin.speechsynthesis;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.CapacitorPlugin;
+import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -14,7 +14,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.os.Bundle;
 
-@CapacitorPlugin()
+@CapacitorPlugin(name="SpeechSynthesis")
 public class SpeechSynthesis extends Plugin {
 
     private TextToSpeech tts;
@@ -33,7 +33,7 @@ public class SpeechSynthesis extends Plugin {
         JSObject ret = new JSObject();
         ret.put("hasVolumeControl",true);
         ret.put("hasSpeechRateControl",true);
-        call.success(ret);
+        call.resolve(ret);
     }
 
 
@@ -47,7 +47,7 @@ public class SpeechSynthesis extends Plugin {
       final Locale locale = Locale.forLanguageTag(language);
   
       if (locale == null) {
-        call.error("Language was not a valid language tag.");
+        call.reject("Language was not a valid language tag.");
         return;
       }
   
@@ -92,7 +92,7 @@ public class SpeechSynthesis extends Plugin {
         }
       });
 
-      call.success();
+      call.resolve();
 
       // Not yet implemented
       // throw new UnsupportedOperationException();
